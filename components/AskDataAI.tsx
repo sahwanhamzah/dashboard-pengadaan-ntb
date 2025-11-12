@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// FIX: Use the correct import 'GoogleGenAI' instead of the deprecated 'GoogleGenerativeAI'.
+// Correct import based on latest guidelines
 import { GoogleGenAI } from '@google/genai';
 import { marked } from 'marked';
 import { Project } from '../types';
@@ -8,7 +8,7 @@ interface AskDataAIProps {
   projects: Project[];
 }
 
-// Inisialisasi API Key dari environment variables
+// API Key is correctly sourced from environment variables by Vite
 const API_KEY = process.env.GEMINI_API_KEY;
 
 const AskDataAI: React.FC<AskDataAIProps> = ({ projects }) => {
@@ -30,7 +30,7 @@ const AskDataAI: React.FC<AskDataAIProps> = ({ projects }) => {
       return;
     }
     if (!API_KEY) {
-        setError("Kunci API Gemini belum diatur. Silakan atur di Vercel Environment Variables.");
+        setError("Kunci API Gemini belum diatur. Pastikan Anda sudah menambahkannya di pengaturan Vercel.");
         return;
     }
 
@@ -39,10 +39,10 @@ const AskDataAI: React.FC<AskDataAIProps> = ({ projects }) => {
     setAnswer('');
 
     try {
-      // FIX: Initialize the GenAI client with a named apiKey parameter as required.
+      // Correct initialization with named apiKey parameter
       const ai = new GoogleGenAI({ apiKey: API_KEY });
 
-      // Sederhanakan data proyek agar lebih efisien
+      // Simplify project data for a more efficient prompt
       const simplifiedData = projects.map(p => ({
         nama: p.name,
         jenis: p.type,
@@ -55,13 +55,13 @@ const AskDataAI: React.FC<AskDataAIProps> = ({ projects }) => {
 
       const prompt = `Anda adalah seorang analis data yang ahli dalam menganalisis data pengadaan barang dan jasa. Berdasarkan data JSON berikut, jawab pertanyaan pengguna dengan ringkas, akurat, dan dalam format Markdown. Data: ${JSON.stringify(simplifiedData, null, 2)}\n\nPertanyaan: ${question}`;
 
-      // FIX: Use the modern 'ai.models.generateContent' API instead of the deprecated 'getGenerativeModel' and 'generateContent' chain.
-      // FIX: Use a recommended model 'gemini-2.5-flash' instead of the deprecated 'gemini-pro'.
+      // Use the modern 'ai.models.generateContent' API
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: prompt,
       });
-      // FIX: Access the response text directly via the '.text' property instead of calling '.text()'.
+      
+      // Access the response text directly via the '.text' property
       const text = response.text;
       
       const htmlAnswer = marked.parse(text);
@@ -69,7 +69,7 @@ const AskDataAI: React.FC<AskDataAIProps> = ({ projects }) => {
 
     } catch (err: any) {
       console.error("Error calling Gemini API:", err);
-      setError("Terjadi kesalahan saat menghubungi AI. Mungkin ada masalah dengan kunci API atau koneksi. Silakan coba lagi.");
+      setError("Terjadi kesalahan saat menghubungi AI. Pastikan kunci API Anda valid dan coba lagi.");
     } finally {
       setIsLoading(false);
     }
@@ -77,8 +77,6 @@ const AskDataAI: React.FC<AskDataAIProps> = ({ projects }) => {
   
   const handleExampleClick = (q: string) => {
       setQuestion(q);
-      // Optional: auto-submit when an example is clicked
-      // handleAsk(); 
   }
 
   return (
