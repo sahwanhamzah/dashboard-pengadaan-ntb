@@ -1,0 +1,5 @@
+{
+  "name": "Dashboard Proyek Pengadaan",
+  "description": "A web application to monitor procurement project activities, including their location coordinates, progress, and budget realization.",
+  "requestFramePermissions": []
+}
