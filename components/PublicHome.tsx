@@ -77,7 +77,7 @@ const PublicHome: React.FC<PublicHomeProps> = ({ projects, onAdminLogin, selecte
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Coat_of_arms_of_West_Nusa_Tenggara.svg/250px-Coat_of_arms_of_West_Nusa_Tenggara.svg.png" alt="Logo NTB" className="h-10 w-auto" />
-             <h1 className="text-xl font-bold text-slate-900 hidden sm:block">Monitoring Paket Pengadaan Provinsi NTB</h1>
+             <h1 className="text-xl font-bold text-slate-900 hidden sm:block">Monitoring Pengadaan NTB</h1>
           </div>
           <button
             onClick={onAdminLogin}
